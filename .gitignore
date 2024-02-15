@@ -1,0 +1,15 @@
+# IDE
+.vscode
+.idea
+
+.DS_Store
+.misc
+
+# Java Script
+node_modules
+
+# Python
+.ipynb_checkpoints
+__pycache__
+*.npy
+*.pth
