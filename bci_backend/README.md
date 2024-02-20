@@ -1,5 +1,4 @@
 
-```markdown
 # Django EEG Autoencoder Classifier
 
 This Django project implements an API for classifying EEG signals using a pretrained autoencoder model. The API accepts EEG data in JSON format, performs prediction using the autoencoder classifier, and returns the predicted label along with the provided timestamp and username.
@@ -73,4 +72,4 @@ Contributions to this project are welcome. Please fork the repository, make your
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
+
