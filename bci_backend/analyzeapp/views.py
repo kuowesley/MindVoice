@@ -1,6 +1,9 @@
 from django.http import JsonResponse
 from django.conf import settings
 import torch
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
 import os
 from django.views.decorators.csrf import csrf_exempt
 
@@ -47,3 +50,42 @@ def analyze(request):
     else:
         return JsonResponse({'error': 'This endpoint only supports POST requests.'})
 
+@csrf_exempt
+def register(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            username = data.get('user')
+            password = data.get('password')
+
+            # 檢查密碼複雜度
+            if not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$', password):
+                return JsonResponse({'response': False, 'reason': 'Password complexity requirement not met'})
+
+            # 檢查用戶名是否已存在
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({'response': False, 'reason': 'Username already exists'})
+            
+            # 創建用戶
+            User.objects.create_user(username=username, password=password)
+            return JsonResponse({'response': True})
+        except Exception as e:
+            return JsonResponse({'response': False, 'reason': 'Registration failed'})
+
+@csrf_exempt
+def login_view(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        username = data.get('user')
+        password = data.get('password')
+        user = authenticate(username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'response': True, 'reason': 'yes'})
+        else:
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({'response': False, 'reason': 'wrong password'})
+            else:
+                return JsonResponse({'response': False, 'reason': 'no user'})
+    return JsonResponse({'response': False, 'reason': 'login failed'})
