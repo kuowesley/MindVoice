@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.EEGActivity">
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="result"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/yesButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="yes"
+        app:layout_constraintTop_toBottomOf="@id/resultTextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/helpMeButton"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/helpMeButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="help_me"
+        app:layout_constraintTop_toBottomOf="@id/resultTextView"
+        app:layout_constraintLeft_toRightOf="@id/yesButton"
+        app:layout_constraintRight_toLeftOf="@id/stopButton"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="stop"
+        app:layout_constraintTop_toBottomOf="@id/resultTextView"
+        app:layout_constraintLeft_toRightOf="@id/helpMeButton"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/thankYouButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="thank_you"
+        app:layout_constraintTop_toBottomOf="@id/yesButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/helloButton"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/helloButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="hello"
+        app:layout_constraintTop_toBottomOf="@id/helpMeButton"
+        app:layout_constraintLeft_toRightOf="@id/thankYouButton"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/analyzeButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="analyze"
+        app:layout_constraintTop_toBottomOf="@id/thankYouButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
