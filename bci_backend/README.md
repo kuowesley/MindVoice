@@ -39,9 +39,9 @@ python manage.py migrate
 
 Before running the application, you need to download the pretrained model file `eeg_autoencoder_classifier_500.pth` and place it in the `analyzeapp` directory within the project. The model file can be downloaded from the following link:
 
-[Download Pretrained Model](https://example.com/download/model)
+[Download Pretrained Model](https://drive.google.com/drive/u/0/folders/1G6LcJoStDQTNobM6XeEZaKzqI7riyVzF))
 
-Please ensure the model file is located at: `your-repository-name/analyzeapp/eeg_autoencoder_classifier_500.pth`
+Please ensure the model file is located at: `your-repository-name/analyzeapp/eeg_CNNautoencoder_classifier_72.07.pth`
 
 ### Running the Server
 
