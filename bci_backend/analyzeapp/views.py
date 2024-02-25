@@ -20,6 +20,7 @@ model.eval()
 
 @csrf_exempt
 def analyze(request):
+    print("Running prediction...")
     if request.method == 'POST':
         try:
             data = json.loads(request.body.decode('utf-8'))
@@ -92,3 +93,7 @@ def login_view(request):
             else:
                 return JsonResponse({'response': False, 'reason': 'no user'})
     return JsonResponse({'response': False, 'reason': 'login failed'})
+
+@csrf_exempt
+def health(request):
+    return JsonResponse({'status': 'ok'})

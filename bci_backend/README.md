@@ -26,13 +26,13 @@ cd your-repository-name
 2. Install the required Python packages:
 
 ```bash
-pip install -r requirements.txt
+poetry install
 ```
 
 3. Migrate the database:
 
 ```bash
-python manage.py migrate
+poetry run python bci_backend.py migrate
 ```
 
 ### Downloading the Model
@@ -48,7 +48,7 @@ Please ensure the model file is located at: `your-repository-name/analyzeapp/eeg
 To start the Django development server, run:
 
 ```bash
-python manage.py runserver 0.0.0.0:8000 
+poetry run python bci_backend.py runserver 0.0.0.0:8000 
 ```
 
 The API will be available at `http://127.0.0.1:8000/api/analyze/`.
