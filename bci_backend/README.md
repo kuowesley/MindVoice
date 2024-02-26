@@ -53,7 +53,7 @@ poetry run python bci_backend.py runserver 0.0.0.0:8000
 
 The API will be available at `http://127.0.0.1:8000/api/analyze/`.
 
-## Usage
+## REST APIs
 
 To use the API, send a POST request to `/api/analyze/` with a JSON payload containing the EEG data, timestamp, and username. Example payload:
 
@@ -63,6 +63,12 @@ To use the API, send a POST request to `/api/analyze/` with a JSON payload conta
   "time": "2023-01-01T12:00:00",
   "UserName": "JohnDoe"
 }
+```
+
+## Enter virtual environment in command line
+
+```bash
+poetry shell
 ```
 
 ## Contributing
