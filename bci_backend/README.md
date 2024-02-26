@@ -8,28 +8,16 @@ This Django project implements an API for classifying EEG signals using a pretra
 To get started with this project, follow these steps:
 
 ### Requirements
-
-- Python 3.8 or higher
-- Django
-- PyTorch
-- Other dependencies listed in `requirements.txt`
+See the [pyproject.toml](pyproject.toml) file for the required Python packages. The project uses [Poetry](https://python-poetry.org/) for dependency management.
 
 ### Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/your-github-username/your-repository-name.git
-cd your-repository-name
-```
-
-2. Install the required Python packages:
+1. Install the required Python packages:
 
 ```bash
 poetry install
 ```
 
-3. Migrate the database:
+2. Initialize the database:
 
 ```bash
 poetry run python bci_backend.py migrate
@@ -37,14 +25,11 @@ poetry run python bci_backend.py migrate
 
 ### Downloading the Model
 
-Before running the application, you need to download the pretrained model file `eeg_autoencoder_classifier_500.pth` and place it in the `analyzeapp` directory within the project. The model file can be downloaded from the following link:
+Before running the application, you need to download the pretrained model file [eeg_autoencoder_classifier_500.pth](https://drive.google.com/drive/u/0/folders/1G6LcJoStDQTNobM6XeEZaKzqI7riyVzF) and place it in the `analyzeapp` directory within the project.
 
-[Download Pretrained Model](https://drive.google.com/drive/u/0/folders/1G6LcJoStDQTNobM6XeEZaKzqI7riyVzF))
-
-Please ensure the model file is located at: `your-repository-name/analyzeapp/eeg_CNNautoencoder_classifier_72.07.pth`
+Please ensure the model file is located at: `your-repository-name/bci_backend/analyzeapp/eeg_CNNautoencoder_classifier_72.07.pth`
 
 ### Running the Server
-
 To start the Django development server, run:
 
 ```bash
@@ -77,5 +62,4 @@ Contributions to this project are welcome. Please fork the repository, make your
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
