@@ -7,6 +7,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface LoginInterface {
-    @POST("/api/login")
+    @POST("/api/login/")
     fun getLogin(@Body credential: LoginCallModel): Call<LoginCallbackModel>
 }

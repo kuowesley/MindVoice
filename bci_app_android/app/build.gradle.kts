@@ -52,4 +52,5 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // OkHttp日誌攔截器（可選）
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation("com.google.android.material:material:1.4.0")
 }

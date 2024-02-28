@@ -43,5 +43,10 @@ class LoginActivity : AppCompatActivity() {
             // 跳轉至註冊頁面
             startActivity(Intent(this, RegisterActivity::class.java))
         }
+
+        //test without login
+        binding.testButton.setOnClickListener {
+            startActivity(Intent(this, DevicesActivity::class.java))
+        }
     }
 }

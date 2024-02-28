@@ -14,8 +14,8 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-class EEGAdapter(private val context: Context) {
 
+class MindVoiceAdapter(private val context: Context){
     fun sendEEGData(action: String, callback: (String) -> Unit) {
         val eegData = loadEEGDataFromAssets(action) // 假設你有一個方法來從assets加載對應的JSON數據
         println(eegData)
@@ -52,20 +52,6 @@ class EEGAdapter(private val context: Context) {
 
         val currentTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
         val userName = "Jack_Liao"
-
-
-//        dataList.forEach { array ->
-//            // Iterate through each Float element within the inner array
-//            array.forEach { element ->
-//                println(element)
-//            }
-//        }
-//
-//       // println(dataAsArray)
-//
-//        println(currentTime)
-//        println(userName)
-
 
         return EEGCallModel(dataList, currentTime, userName)
     }

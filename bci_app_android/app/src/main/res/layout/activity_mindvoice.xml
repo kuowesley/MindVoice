@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/buttonContainer"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            >
+
+            <ImageView
+                android:id="@+id/signal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/signal"
+                android:layout_gravity="center"
+                android:layout_above="@id/resultContainer"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="20dp"/>
+
+            <RelativeLayout
+                android:id="@+id/resultContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_above="@id/startEndButton"
+                >
+
+                <ImageView
+                    android:id="@+id/resultImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:src="@drawable/result"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Your Text Here"
+                    android:textColor="@color/black"
+                    />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/startEndButton"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/start"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_above="@id/switchModeContainer"
+                />
+
+            <RelativeLayout
+                android:id="@+id/switchModeContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+<!--                <View-->
+<!--                    android:id="@+id/centerGuide"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:background="#6DD14DEF" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/textMode"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Text Mode"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:layout_toLeftOf="@id/centerGuide"-->
+<!--                    android:layout_alignTop="@id/centerGuide"-->
+<!--                    android:layout_marginRight="10dp"-->
+<!--                    android:background="#6D31EDFF"/>-->
+<!--                <TextView-->
+<!--                    android:id="@+id/voiceMode"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Voice Mode"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:layout_toRightOf="@id/centerGuide"-->
+<!--                    android:layout_alignTop="@id/centerGuide"-->
+<!--                    android:background="#5113D7FF"-->
+<!--                    android:layout_marginLeft="10dp"/>-->
+<!--                <Switch-->
+<!--                    android:id="@+id/modeSwitch"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textOff="Text Mode"-->
+<!--                    android:textOn="Voice Mode"-->
+<!--                    android:checked="false"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginTop="20dp"/>-->
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/textModeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Text Mode"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/voiceModeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Voice Mode"/>
+
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/buttonContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="#F0C8F4F4">
+
+            <Button
+                android:id="@+id/devicesButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Devices"
+                android:textColor="@color/black"
+                android:backgroundTint="#F0C8F4F4"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"/>
+
+            <Button
+                android:id="@+id/mindVoiceButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="#F0C8F4F4"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="MindVoice"
+                android:textColor="@color/black"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"/>
+
+            <Button
+                android:id="@+id/profileButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="#F0C8F4F4"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Profile"
+                android:textColor="@color/black"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

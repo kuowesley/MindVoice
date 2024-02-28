@@ -7,6 +7,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface EEGInterface {
-    @POST("/api/analyze")
+    @POST("/api/analyze/")
     fun analyzeEEGData(@Body eegData: EEGCallModel): Call<EEGCallbackModel>
 }
