@@ -4,7 +4,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class LoginRetrofitManager {
     fun getLoginClient(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://0.0.0.0:8000") // 更換為你的API基礎URL
+            .baseUrl("https://ssw555-agile-duck.onrender.com") // 更換為你的API基礎URL
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
