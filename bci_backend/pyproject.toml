@@ -23,6 +23,7 @@ opentelemetry-instrumentation = "^0.44b0"
 opentelemetry-api = "^1.23.0"
 opentelemetry-exporter-otlp-proto-grpc = "^1.23.0"
 opentelemetry-exporter-jaeger = "^1.21.0"
+cog = "^0.9.4"
 
 [[tool.poetry.source]]
 name = "pytorch"

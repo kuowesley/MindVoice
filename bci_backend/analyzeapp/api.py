@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import torch
 import numpy as np
-from autoencoder_2 import EEGAutoencoderClassifier  # 確保將您的模型類存儲在名為 model.py 的文件中
+from ..model.autoencoder_2 import EEGAutoencoderClassifier  # 確保將您的模型類存儲在名為 model.py 的文件中
 
 app = Flask(__name__)
 
