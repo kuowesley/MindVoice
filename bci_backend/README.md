@@ -29,7 +29,12 @@ Before running the application, you need to download the pretrained model file [
 
 Please ensure the model file is located at: `your-repository-name/bci_backend/analyzeapp/eeg_CNNautoencoder_classifier_72.07.pth`
 
-### Running the Server
+### Run Unit Tests
+```bash
+poetry run pytest --cov=analyzeapp
+```
+
+### Start The Server
 To start the Django development server, run:
 
 ```bash
