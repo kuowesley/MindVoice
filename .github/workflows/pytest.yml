@@ -2,9 +2,9 @@ name: Python application test with pytest
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   workflow_dispatch:  # This line allows manual triggering
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
       run: poetry install
 
     - name: Run pytest
-      run: poetry run pytest --cov=analyzeapp --cov-report html
+      run: set DEV_MODE=True && poetry run pytest --cov=analyzeapp --cov-report html
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
