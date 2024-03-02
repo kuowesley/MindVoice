@@ -43,3 +43,17 @@ class AnalyzeDataTestCase(TestCase):
             response_data = json.loads(response.content)
             self.assert_response_valid(response_data)
             self.assertEqual(response_data['label'], label)
+    
+    def test_analyze_data_endpoint_invalid(self):
+        response = self.client.post('/api/analyze/', content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        response_data = json.loads(response.content)
+        self.assertEqual(response_data, {'error': 'No data provided'})
+
+    def test_analyze_data_endpoint_invalid_2(self):
+        invalidJson = '{"test": "test'
+        response = self.client.post('/api/analyze/', invalidJson, content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        response_data = json.loads(response.content)
+        self.assertEqual(response_data, {'error':'Invalid JSON'})
+
