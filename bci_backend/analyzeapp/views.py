@@ -13,7 +13,13 @@ import replicate
 # load auth token from .env file
 from dotenv import load_dotenv
 load_dotenv()
-
+DEV_MODE = os.environ.get('DEV_MODE') == 'True'
+if DEV_MODE:
+    print("DEV_MODE=True. Will use local predictor.")
+    from model.predict import Predictor
+    predictor = Predictor()
+    predictor.set_model_dir(os.path.join(settings.BASE_DIR, 'model'))
+    predictor.setup()
 
 @csrf_exempt
 def analyze(request):
@@ -31,7 +37,7 @@ def analyze(request):
             return JsonResponse({'error': 'No data provided'}, status=400)
 
         response = {
-            'label': predict_remote(input_data),
+            'label': predict(input_data),
             'time': user_time,
             'UserName': user_name
         }
@@ -40,24 +46,26 @@ def analyze(request):
     else:
         return JsonResponse({'error': 'This endpoint only supports POST requests.'})
 
-def predict_remote(eeg_data) -> int:
-        # generate file name based on the hash of the data
-        file_name = str(uuid.uuid4()) + "-" + str(hash(str(eeg_data))) + '.json'
-        json_data = {
-            "data": eeg_data
-        }
-        # save to a temp file
-        try:
-            with open(file_name, 'w') as f:
-                json.dump(json_data, f)
-            with open(file_name, 'rb') as f:
-                output = replicate.run(
-                    "fanyi-zhao/bci-backend:977ca5966281eeaf1cd7ee40950cafd38cd855cecc6678e71caefdf452d24a42",
-                    input={"eeg_data": f},
-                )
-            return int(output)
-        finally:
-            os.remove(file_name)
+def predict(eeg_data) -> int:
+    if DEV_MODE:
+        return predictor.predict_local(eeg_data)
+    # generate file name based on the hash of the data
+    file_name = str(uuid.uuid4()) + "-" + str(hash(str(eeg_data))) + '.json'
+    json_data = {
+        "data": eeg_data
+    }
+    # save to a temp file
+    try:
+        with open(file_name, 'w') as f:
+            json.dump(json_data, f)
+        with open(file_name, 'rb') as f:
+            output = replicate.run(
+                "fanyi-zhao/bci-backend:977ca5966281eeaf1cd7ee40950cafd38cd855cecc6678e71caefdf452d24a42",
+                input={"eeg_data": f},
+            )
+        return int(output)
+    finally:
+        os.remove(file_name)
 
 @csrf_exempt
 def register(request):

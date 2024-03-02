@@ -24,13 +24,16 @@ poetry run python bci_backend.py migrate
 ```
 
 ### Downloading the Model
-
-Before running the application, you need to download the pretrained model file [eeg_autoencoder_classifier_500.pth](https://drive.google.com/drive/u/0/folders/1G6LcJoStDQTNobM6XeEZaKzqI7riyVzF) and place it in the `analyzeapp` directory within the project.
-
-Please ensure the model file is located at: `your-repository-name/bci_backend/analyzeapp/eeg_CNNautoencoder_classifier_72.07.pth`
+In your `${repository}/bci_backend` directory, run the following commands to download the model file:
+```bash
+pip install gdown
+gdown https://drive.google.com/uc?id=1SK0MyAoj-un3s-YN4sfKRdFS6OjrABfJ
+mv best_model.pth ./model/eeg_CNNautoencoder_classifier_72.07.pth
+```
 
 ### Run Unit Tests
 ```bash
+echo "DEV_MODE=True" > .env
 poetry run pytest --cov=analyzeapp
 ```
 
@@ -38,6 +41,7 @@ poetry run pytest --cov=analyzeapp
 To start the Django development server, run:
 
 ```bash
+echo "DEV_MODE=True" > .env
 poetry run python bci_backend.py runserver 0.0.0.0:8000 
 ```
 
