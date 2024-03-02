@@ -2,7 +2,6 @@ import re
 import uuid
 from django.http import JsonResponse
 from django.conf import settings
-import torch
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 

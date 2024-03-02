@@ -11,6 +11,7 @@ django = "^5.0.2"
 flask = "^3.0.2"
 requests = "^2.31.0"
 replicate = "^0.24.0"
+python-dotenv = "^1.0.1"
 
 [[tool.poetry.source]]
 name = "pytorch"
