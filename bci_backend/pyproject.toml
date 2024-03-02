@@ -8,22 +8,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
 django = "^5.0.2"
-torch = [
-    { version = "^2.0.0", source = "pytorch", platform = "!=darwin"},
-    { version = "^2.0.0", source = "pypi", platform = "darwin"},
-]
-numpy = "^1.26.4"
-einops = "^0.7.0"
-pandas = "^2.2.1"
 flask = "^3.0.2"
-opentelemetry-sdk = "^1.23.0"
-opentelemetry-instrumentation-django = "^0.44b0"
 requests = "^2.31.0"
-opentelemetry-instrumentation = "^0.44b0"
-opentelemetry-api = "^1.23.0"
-opentelemetry-exporter-otlp-proto-grpc = "^1.23.0"
-opentelemetry-exporter-jaeger = "^1.21.0"
-cog = "^0.9.4"
+replicate = "^0.24.0"
 
 [[tool.poetry.source]]
 name = "pytorch"
@@ -34,6 +21,14 @@ priority = "explicit"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.2"
 pytest-cov = "^4.1.0"
+torch = [
+    { version = "^2.0.0", source = "pytorch", platform = "!=darwin"},
+    { version = "^2.0.0", source = "pypi", platform = "darwin"},
+]
+numpy = "^1.26.4"
+einops = "^0.7.0"
+pandas = "^2.2.1"
+cog = "^0.9.4"
 
 [build-system]
 requires = ["poetry-core"]
