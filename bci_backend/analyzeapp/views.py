@@ -75,12 +75,7 @@ def login_view(request):
         
         if user is not None:
             login(request, user)
-            return JsonResponse({'response': True, 'reason': 'yes'})
-        else:
-            if User.objects.filter(username=username).exists():
-                return JsonResponse({'response': False, 'reason': 'wrong password'})
-            else:
-                return JsonResponse({'response': False, 'reason': 'no user'})
+            return JsonResponse({'response': True, 'reason': 'login success'})
     return JsonResponse({'response': False, 'reason': 'login failed'})
 
 @csrf_exempt
