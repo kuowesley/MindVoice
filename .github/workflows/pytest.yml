@@ -30,7 +30,7 @@ jobs:
       working-directory: bci_backend
 
     - name: Install gdown
-      run: pip install gdown
+      run: pip install gdown coverage
       working-directory: bci_backend
 
     - name: Download and rename model
@@ -44,7 +44,9 @@ jobs:
       working-directory: bci_backend
 
     - name: Run pytest
-      run: poetry run pytest --cov=analyzeapp --cov-report=xml:coverage.xml
+      run: |
+        poetry run pytest --cov=. --cov-report xml
+        coverage xml -i -o coverage.lcov
       working-directory: bci_backend
 
     - name: Coveralls Parallel
@@ -52,4 +54,4 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         flag-name: run-${{ matrix.test }}
-        path-to-lcov: ./bci_backend/coverage.xml
+        path-to-lcov: ./bci_backend/coverage.lcov
