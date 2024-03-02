@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -55,10 +56,10 @@
                 android:id="@+id/startEndButton"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:src="@drawable/start"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:layout_above="@id/switchModeContainer"
+                android:src="@drawable/image_clickable"
                 />
 
             <RelativeLayout
@@ -66,42 +67,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-<!--                <View-->
-<!--                    android:id="@+id/centerGuide"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    android:layout_centerInParent="true"-->
-<!--                    android:background="#6DD14DEF" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/textMode"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Text Mode"-->
-<!--                    android:textSize="20dp"-->
-<!--                    android:layout_toLeftOf="@id/centerGuide"-->
-<!--                    android:layout_alignTop="@id/centerGuide"-->
-<!--                    android:layout_marginRight="10dp"-->
-<!--                    android:background="#6D31EDFF"/>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/voiceMode"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Voice Mode"-->
-<!--                    android:textSize="20dp"-->
-<!--                    android:layout_toRightOf="@id/centerGuide"-->
-<!--                    android:layout_alignTop="@id/centerGuide"-->
-<!--                    android:background="#5113D7FF"-->
-<!--                    android:layout_marginLeft="10dp"/>-->
-<!--                <Switch-->
-<!--                    android:id="@+id/modeSwitch"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textOff="Text Mode"-->
-<!--                    android:textOn="Voice Mode"-->
-<!--                    android:checked="false"-->
-<!--                    android:layout_centerHorizontal="true"-->
-<!--                    android:layout_marginTop="20dp"/>-->
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -111,19 +76,18 @@
                         android:id="@+id/textModeButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Text Mode"/>
+                        android:backgroundTint="#3B67EA"
+                        android:text="Text Mode" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/voiceModeButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Voice Mode"/>
+                        android:text="Voice Mode"
+                        app:backgroundTint="#C3BABA" />
 
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
-
-
-
 
             </RelativeLayout>
 

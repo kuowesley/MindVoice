@@ -1,21 +1,28 @@
 package com.example.bciproject.ui
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.bciproject.R
-import com.example.bciproject.adaptor.EEGAdapter
 import com.example.bciproject.adaptor.MindVoiceAdapter
 import com.example.bciproject.databinding.ActivityMindvoiceBinding
+import com.example.bciproject.util.ProgressionBar
+import com.google.android.material.button.MaterialButton
 import java.util.Locale
+
+
 
 class MindVoiceActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMindvoiceBinding
     private val mindVoiceAdapter = MindVoiceAdapter(this)
     private var classify = mapOf("0" to "hello", "1" to "help_me", "2" to "stop", "3" to "thank_you", "4" to "yes")
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMindvoiceBinding.inflate(layoutInflater)
@@ -45,8 +52,9 @@ class MindVoiceActivity : AppCompatActivity(){
             if(testCase.isNullOrEmpty()){
                 Toast.makeText(this@MindVoiceActivity, "Error: TestCase is empty", Toast.LENGTH_SHORT).show()
             }else{
-                mindVoiceAdapter.sendEEGData(testCase.toString()) { label ->
-                    binding.result.text = label
+                val progressionBar = ProgressionBar(this)
+                mindVoiceAdapter.sendEEGData(testCase.toString(), { label ->
+                    binding.result.text = classify[label].toString()
                     if(mode == "voice"){
                         val action = classify[label].toString()
                         val resourceName = action.toLowerCase(Locale.getDefault()).replace(" ", "_")
@@ -61,18 +69,25 @@ class MindVoiceActivity : AppCompatActivity(){
                             }
                         }
                     }
-                }
+                }, progressionBar)
             }
 
         }
 
+        var textModeButton = findViewById<MaterialButton>(com.example.bciproject.R.id.textModeButton)
+        var voiceModeButton = findViewById<MaterialButton>(com.example.bciproject.R.id.voiceModeButton)
         binding.textModeButton.setOnClickListener{
             //switch to text mode
+
             mode = "text"
+            textModeButton.setBackgroundColor(ContextCompat.getColor(this, R.color.mode_on));
+            voiceModeButton.setBackgroundColor(ContextCompat.getColor(this, R.color.mode_off));
         }
         binding.voiceModeButton.setOnClickListener{
             //switch to voice mode
             mode = "voice"
+            textModeButton.setBackgroundColor(ContextCompat.getColor(this, R.color.mode_off));
+            voiceModeButton.setBackgroundColor(ContextCompat.getColor(this, R.color.mode_on));
         }
 
     }

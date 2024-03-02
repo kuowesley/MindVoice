@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.content.Context
+import com.example.bciproject.util.ProgressionBar
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import java.io.IOException
@@ -16,12 +17,13 @@ import java.util.Date
 import java.util.Locale
 
 class MindVoiceAdapter(private val context: Context){
-    fun sendEEGData(action: String, callback: (String) -> Unit) {
+    fun sendEEGData(action: String, callback: (String) -> Unit, progressionBar: ProgressionBar) {
         val eegData = loadEEGDataFromAssets(action) // 假設你有一個方法來從assets加載對應的JSON數據
-        println(eegData)
+        progressionBar.startLoading()
         val client = EEGRetrofitManager().getEEGClient().create(EEGInterface::class.java)
         client.analyzeEEGData(eegData!!).enqueue(object : Callback<EEGCallbackModel> {
             override fun onResponse(call: Call<EEGCallbackModel>, response: Response<EEGCallbackModel>) {
+                progressionBar.dismissLoading()
                 if (response.isSuccessful && response.body() != null) {
                     val eegResponse = response.body()!!
                     callback(eegResponse.label)
@@ -31,6 +33,8 @@ class MindVoiceAdapter(private val context: Context){
             }
 
             override fun onFailure(call: Call<EEGCallbackModel>, t: Throwable) {
+                progressionBar.dismissLoading()
+                println("------------------")
                 println(t.message)
                 callback("Network error: ${t.message}")
             }

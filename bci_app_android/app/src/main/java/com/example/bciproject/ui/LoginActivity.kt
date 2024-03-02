@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
             loginAdapter.login(username, password) { isSuccess, message ->
                 if (isSuccess) {
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, EEGActivity::class.java)) // 跳轉至EEGActivity
+                    startActivity(Intent(this, DevicesActivity::class.java)) // 跳轉至EEGActivity
                     finish() // 結束當前Activity
                 } else {
                     runOnUiThread {
