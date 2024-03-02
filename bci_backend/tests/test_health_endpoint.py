@@ -4,7 +4,7 @@ from django.test import TestCase, Client
 import json
 
 """
-Testing the analyze endpoint
+Test the /api/health/ endpoint
 """
 from bciBackend import asgi, wsgi, urls, settings
 class HealthCheckTestCase(TestCase):
