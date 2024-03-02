@@ -29,6 +29,16 @@ jobs:
       run: poetry install
       working-directory: bci_backend
 
+    - name: Install gdown
+      run: pip install gdown
+      working-directory: bci_backend
+
+    - name: Download and rename model
+      run: |
+        gdown https://drive.google.com/uc?id=1SK0MyAoj-un3s-YN4sfKRdFS6OjrABfJ
+        mv best_model.pth eeg_CNNautoencoder_classifier_72.07.pth
+      working-directory: bci_backend/model
+
     - name: Set DEV_MODE
       run: echo "DEV_MODE=True" > .env
       working-directory: bci_backend
