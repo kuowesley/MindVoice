@@ -45,12 +45,5 @@ jobs:
 
     - name: Run pytest
       run: |
-        poetry run pytest --cov-report term --cov-report lcov --cov=.
+        poetry run pytest --cov-report term --cov-report lcov --cov-report xml --cov=.
       working-directory: bci_backend
-
-    - name: Coveralls Parallel
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        flag-name: run-${{ matrix.test }}
-        path-to-lcov: ./bci_backend/coverage.lcov
