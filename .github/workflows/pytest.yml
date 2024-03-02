@@ -27,14 +27,16 @@ jobs:
 
     - name: Install dependencies
       run: poetry install
+      working-directory: bci_backend
 
     - name: Run pytest
       run: set DEV_MODE=True && poetry run pytest --cov=analyzeapp --cov-report html
+      working-directory: bci_backend
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
-        file: ./htmlcov/index.html
+        file: ./bci_backend/htmlcov/index.html
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: true
