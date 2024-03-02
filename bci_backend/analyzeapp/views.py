@@ -9,15 +9,12 @@ import os
 from django.views.decorators.csrf import csrf_exempt
 
 import json
-from .newEncoder import EEGAutoencoderClassifier
 
+from model.predict import Predictor
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = EEGAutoencoderClassifier(num_classes=5)  # 移除 hidden_units 参数
-model_path = os.path.join(settings.BASE_DIR, 'analyzeapp', 'eeg_CNNautoencoder_classifier_72.07.pth')
-model.load_state_dict(torch.load(model_path, map_location=device))
-model.to(device)
-model.eval()
+predictor = Predictor()
+predictor.set_model_dir(os.path.join(settings.BASE_DIR, 'model'))
+predictor.setup()
 
 @csrf_exempt
 def analyze(request):
@@ -34,17 +31,8 @@ def analyze(request):
         if input_data is None:
             return JsonResponse({'error': 'No data provided'}, status=400)
 
-        # 将输入数据转换为张量，并添加一个批次维度
-        input_tensor = torch.Tensor(input_data).to(device)
-        input_tensor = input_tensor.unsqueeze(0)  # 现在形状应该是 [1, 64, 795]
-
-        with torch.no_grad():
-            output = model(input_tensor)
-            _, predicted = torch.max(output.data, 1)
-            predicted_label = predicted.item()
-
         response = {
-            'label': predicted_label,
+            'label': predictor.predict_local(input_data),
             'time': user_time,
             'UserName': user_name
         }

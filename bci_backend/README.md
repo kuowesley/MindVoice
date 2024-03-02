@@ -61,6 +61,12 @@ To use the API, send a POST request to `/api/analyze/` with a JSON payload conta
 poetry shell
 ```
 
+## Deployment
+### Deploying the Django Application
+(TODO)
+### Deploying the Model
+See: [EEG Model Inference - Deployment](./model/README.md#deployment)
+
 ## Contributing
 
 Contributions to this project are welcome. Please fork the repository, make your changes, and submit a pull request.

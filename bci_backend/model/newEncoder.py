@@ -1,13 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.optim import SGD
-from torch.utils.data import DataLoader
-import pandas as pd
-
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
 
 
 def Conv1d_Maker(in_channels, out_channels, kernel_size, padding=1, stride=1):
