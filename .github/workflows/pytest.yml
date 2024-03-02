@@ -29,8 +29,12 @@ jobs:
       run: poetry install
       working-directory: bci_backend
 
+    - name: Set DEV_MODE
+      run: echo "DEV_MODE=True" > .env
+      working-directory: bci_backend
+
     - name: Run pytest
-      run: set DEV_MODE=True && poetry run pytest --cov=analyzeapp --cov-report html
+      run: poetry run pytest --cov=analyzeapp --cov-report html
       working-directory: bci_backend
 
     - name: Upload coverage to Codecov
