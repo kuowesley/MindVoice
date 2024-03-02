@@ -19,6 +19,6 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/ALEEF02/bci-django-web-server:${{ github.sha }}
-            ghcr.io/ALEEF02/bci-django-web-server:latest
+            ghcr.io/aleef02/bci-django-web-server:${{ github.sha }}
+            ghcr.io/aleef02/bci-django-web-server:latest
           context: bci_backend
