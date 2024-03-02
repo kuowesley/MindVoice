@@ -29,7 +29,7 @@ class Predictor(BasePredictor):
         self.model.to(self.device)
         self.model.eval()
 
-    def predict_local(self, eeg_data) -> str:
+    def predict_local(self, eeg_data) -> int:
         input_tensor = torch.Tensor(eeg_data).to(self.device)
         input_tensor = input_tensor.unsqueeze(0)  # shape: [1, 64, 795]
         with torch.no_grad():
