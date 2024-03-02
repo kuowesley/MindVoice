@@ -44,13 +44,12 @@ jobs:
       working-directory: bci_backend
 
     - name: Run pytest
-      run: poetry run pytest --cov=analyzeapp --cov-report html
+      run: poetry run pytest --cov=analyzeapp --cov-report=xml:coverage.xml
       working-directory: bci_backend
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-action@master
       with:
-        file: ./bci_backend/htmlcov/index.html
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        flag-name: run-${{ matrix.test }}
+        path-to-lcov: ./bci_backend/coverage.xml
