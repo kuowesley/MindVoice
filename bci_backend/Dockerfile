@@ -28,7 +28,6 @@ COPY . .
 # RUN mv best_model.pth analyzeapp/eeg_CNNautoencoder_classifier_72.07.pth
 
 # Expose the port the app runs on
-EXPOSE 8000
+EXPOSE 8080
 
-# Run the application: poetry run python bci_backend.py runserver 0.0.0.0:8000
-CMD ["poetry", "run", "python", "bci_backend.py", "runserver", "0.0.0.0:8000"]
+CMD ["poetry", "run", "python", "bci_backend.py", "runserver", "0.0.0.0:8080"]
