@@ -1,0 +1,49 @@
+name: Python application test with pytest
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # This line allows manual triggering
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Install dependencies
+      run: poetry install
+      working-directory: bci_backend
+
+    - name: Install gdown
+      run: pip install gdown
+      working-directory: bci_backend
+
+    - name: Download and rename model
+      run: |
+        gdown https://drive.google.com/uc?id=1SK0MyAoj-un3s-YN4sfKRdFS6OjrABfJ
+        mv best_model.pth eeg_CNNautoencoder_classifier_72.07.pth
+      working-directory: bci_backend/model
+
+    - name: Set DEV_MODE
+      run: echo "DEV_MODE=True" > .env
+      working-directory: bci_backend
+
+    - name: Run pytest
+      run: |
+        poetry run pytest --cov-report term --cov-report lcov --cov-report xml --cov=.
+      working-directory: bci_backend

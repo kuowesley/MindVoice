@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "bci-backend"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+django = "^5.0.2"
+flask = "^3.0.2"
+requests = "^2.31.0"
+replicate = "^0.24.0"
+python-dotenv = "^1.0.1"
+
+[[tool.poetry.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu118"
+priority = "explicit"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.2"
+pytest-cov = "^4.1.0"
+torch = [
+    { version = "^2.0.0", source = "pytorch", platform = "!=darwin"},
+    { version = "^2.0.0", source = "pypi", platform = "darwin"},
+]
+numpy = "^1.26.4"
+einops = "^0.7.0"
+pandas = "^2.2.1"
+cog = "^0.9.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
