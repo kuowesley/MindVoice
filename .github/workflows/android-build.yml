@@ -1,0 +1,21 @@
+name: AndroidBuild
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubunto-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 1.8
+          distribution: "temurin"
+          cache: bci_app_android
+
+      - name: Build with Gradle
+        run: ./gradlew build
