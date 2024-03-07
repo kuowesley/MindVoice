@@ -68,7 +68,7 @@ class AnalyzeDataTestCase(TestCase):
                     response_data = json.loads(response.content)
                     if response_data['label'] == label: correct += 1
                     total += 1
-            self.assertGreater((correct / total), 0.68, "Accuracy less than 68% for " + str(label))
+            self.assertGreater((correct / total), 0.68, "Accuracy less than 68% for " + str(label) + " - " + str((correct / total)))
             
     def test_analyze_test_recall_precision(self):
         FP = TP = FN = TN = 0.0
@@ -89,5 +89,5 @@ class AnalyzeDataTestCase(TestCase):
         # Precision: TP / (TP + FP)
         precision = TP / (TP + FP) if TP + FP != 0 else 0 # prevent div 0
         
-        self.assertGreater(recall, 0.7, "Recall less than 70%!")
-        self.assertGreater(precision, 0.7, "Precision less than 70%!")
+        self.assertGreater(recall, 0.7, "Recall less than 70%! " + str(recall))
+        self.assertGreater(precision, 0.7, "Precision less than 70%! " + str(precision))
