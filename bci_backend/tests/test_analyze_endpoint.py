@@ -23,8 +23,8 @@ class AnalyzeDataTestCase(TestCase):
         }
         self.client = Client()
 
-    def load_request_data(self, file_name):
-        with open(os.path.join(settings.BASE_DIR, 'tests', file_name)) as f:
+    def load_request_data(self, file_name, append=""):
+        with open(os.path.join(settings.BASE_DIR, 'tests', append, file_name)) as f:
             self.data['data'] = json.load(f).get('data')
             print(self.data['data'])
     
@@ -63,7 +63,7 @@ class AnalyzeDataTestCase(TestCase):
             total = 0.0
             for file_name in os.listdir(os.path.join(settings.BASE_DIR, 'tests/test_data')):
                 if file_name.startswith(str(label)):
-                    self.load_request_data(file_name)
+                    self.load_request_data(file_name, "test_data")
                     response = self.client.post('/api/analyze/', json.dumps(self.data), content_type='application/json')
                     response_data = json.loads(response.content)
                     if response_data['label'] == label: correct += 1
@@ -75,7 +75,7 @@ class AnalyzeDataTestCase(TestCase):
         for label in [0, 1, 2, 3, 4]:
             for file_name in os.listdir(os.path.join(settings.BASE_DIR, 'tests/test_data')):
                 if file_name.startswith(str(label)):
-                    self.load_request_data(file_name)
+                    self.load_request_data(file_name, "test_data")
                     response = self.client.post('/api/analyze/', json.dumps(self.data), content_type='application/json')
                     response_data = json.loads(response.content)
                     TP += (response_data['label'] == label and label in (0, 3, 4)) # 'Positive' feeling labels
