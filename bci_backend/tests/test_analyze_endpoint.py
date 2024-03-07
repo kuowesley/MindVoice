@@ -56,4 +56,36 @@ class AnalyzeDataTestCase(TestCase):
         self.assertEqual(response.status_code, 400)
         response_data = json.loads(response.content)
         self.assertEqual(response_data, {'error':'Invalid JSON'})
-
+        
+    def test_analyze_test_accuracy(self):
+        for label in [0, 1, 2, 3, 4]:
+            correct = 0.0
+            total = 0.0
+            for filename in os.listdir(os.path.join(settings.BASE_DIR, 'tests')) if filename.startswith(label):
+                self.load_request_data(file_name)
+                response = self.client.post('/api/analyze/', json.dumps(self.data), content_type='application/json')
+                response_data = json.loads(response.content)
+                if response_data['label'] == label: correct += 1
+                total += 1
+            self.assertGreater((correct / total), 0.68, "Accuracy less than 68% for " + str(label))
+            
+    def test_analyze_test_recall_precision(self):
+        for label in [0, 1, 2, 3, 4]:
+            FP = TP = FN = TN = 0.0
+            for filename in os.listdir(os.path.join(settings.BASE_DIR, 'tests/test_data')) if filename.startswith(label):
+                self.load_request_data(file_name)
+                response = self.client.post('/api/analyze/', json.dumps(self.data), content_type='application/json')
+                response_data = json.loads(response.content)
+                TP += (response_data['label'] == label and label in (0, 3, 4))
+                TN += (response_data['label'] == label and label in (1, 2))
+                FP += (response_data['label'] != label and label in (0, 3, 4))
+                FN += (response_data['label'] != label and label in (1, 2))
+        
+        # Recall: TP / (TP + FN)
+        recall = TP / (TP + FN) if TP + FN != 0 else 0 # prevent div 0
+        
+        # Precision: TP / (TP + FP)
+        precision = TP / (TP + FP) if TP + FP != 0 else 0 # prevent div 0
+        
+        self.assertGreater(recall, 0.7, "Recall less than 70%!")
+        self.assertGreater(precision, 0.7, "Precision less than 70%!")
