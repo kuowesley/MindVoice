@@ -61,7 +61,7 @@ class AnalyzeDataTestCase(TestCase):
         for label in [0, 1, 2, 3, 4]:
             correct = 0.0
             total = 0.0
-            for filename in os.listdir(os.path.join(settings.BASE_DIR, 'tests')) if filename.startswith(label):
+            for file_name in (os.listdir(os.path.join(settings.BASE_DIR, 'tests/test_data')) if filename.startswith(label)):
                 self.load_request_data(file_name)
                 response = self.client.post('/api/analyze/', json.dumps(self.data), content_type='application/json')
                 response_data = json.loads(response.content)
@@ -72,7 +72,7 @@ class AnalyzeDataTestCase(TestCase):
     def test_analyze_test_recall_precision(self):
         for label in [0, 1, 2, 3, 4]:
             FP = TP = FN = TN = 0.0
-            for filename in os.listdir(os.path.join(settings.BASE_DIR, 'tests/test_data')) if filename.startswith(label):
+            for file_name in (os.listdir(os.path.join(settings.BASE_DIR, 'tests/test_data')) if filename.startswith(label)):
                 self.load_request_data(file_name)
                 response = self.client.post('/api/analyze/', json.dumps(self.data), content_type='application/json')
                 response_data = json.loads(response.content)
