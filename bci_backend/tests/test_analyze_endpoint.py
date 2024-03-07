@@ -26,7 +26,7 @@ class AnalyzeDataTestCase(TestCase):
     def load_request_data(self, file_name, append=""):
         with open(os.path.join(settings.BASE_DIR, 'tests', append, file_name)) as f:
             self.data['data'] = json.load(f).get('data')
-            print(self.data['data'])
+            #print(self.data['data'])
     
     def assert_response_valid(self, response_data):
         self.assertIn('label', response_data)
