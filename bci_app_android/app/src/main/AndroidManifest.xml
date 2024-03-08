@@ -31,7 +31,7 @@
             android:name=".ui.RegisterActivity"
             android:exported="false"
             android:label="RegisterActivity"
-            android:theme="@style/Theme.Bciproject" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.EEGActivity"
             android:exported="false"

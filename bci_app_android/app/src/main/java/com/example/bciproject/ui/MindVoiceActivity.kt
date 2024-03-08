@@ -53,11 +53,10 @@ class MindVoiceActivity : AppCompatActivity(){
                 Toast.makeText(this@MindVoiceActivity, "Error: TestCase is empty", Toast.LENGTH_SHORT).show()
             }else{
                 val progressionBar = ProgressionBar(this)
-                mindVoiceAdapter.sendEEGData(testCase.toString(), { label ->
-                    binding.result.text = classify[label].toString()
+                mindVoiceAdapter.sendEEGData(testCase.toString(), { action ->
+                    binding.result.text = action
                     if(mode == "voice"){
-                        val action = classify[label].toString()
-                        val resourceName = action.toLowerCase(Locale.getDefault()).replace(" ", "_")
+                        val resourceName = action.lowercase(Locale.getDefault()).replace(" ", "_")
                         val resourceId = resources.getIdentifier(resourceName, "raw", packageName)
                         if (resourceId != 0){
                             val mediaPlayer = MediaPlayer.create(this@MindVoiceActivity, resourceId)

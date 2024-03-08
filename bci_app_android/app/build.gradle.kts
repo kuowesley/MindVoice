@@ -33,6 +33,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    packagingOptions {
+        exclude("META-INF/LICENSE.md")
+        exclude("META-INF/LICENSE-notice.md")
+    }
 }
 
 dependencies {
@@ -43,7 +48,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
-    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     // Retrofit核心庫
@@ -53,4 +58,27 @@ dependencies {
     // OkHttp日誌攔截器（可選）
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
     implementation("com.google.android.material:material:1.4.0")
+
+
+
+    // Mockito dependencies
+    testImplementation ("org.mockito:mockito-core:2.22")
+    testImplementation ("org.robolectric:robolectric:4.+")
+    // Android Testing Support for Mockito
+    androidTestImplementation ("org.mockito:mockito-android:3.12.4")
+    // Additional dependencies for unit testing
+    // This is required for mocking final classes
+    testImplementation ("org.mockito:mockito-inline:3.12.4")
+    // Android Testing Support
+    androidTestImplementation ("androidx.test:core:1.x")
+    //androidTestImplementation ("androidx.test.ext:junit:1.x")
+    androidTestImplementation ("androidx.test:runner:1.x")
+    //androidTestImplementation ("androidx.test.espresso:espresso-core:3.x")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation ("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    //androidTestImplementation ("org.mockito:mockito-inline:3.x.x")
+    testImplementation ("io.mockk:mockk:1.12.0")
+    androidTestImplementation("org.testng:testng:6.9.6")
+
+
 }
