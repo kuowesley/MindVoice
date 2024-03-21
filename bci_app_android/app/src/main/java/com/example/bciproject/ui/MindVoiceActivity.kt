@@ -19,7 +19,7 @@ import java.util.Locale
 class MindVoiceActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMindvoiceBinding
-    private val mindVoiceAdapter = MindVoiceAdapter(this)
+    private val mindVoiceAdapter = MindVoiceAdapter(this, this@MindVoiceActivity)
     private var classify = mapOf("0" to "hello", "1" to "help_me", "2" to "stop", "3" to "thank_you", "4" to "yes")
 
 
@@ -55,6 +55,7 @@ class MindVoiceActivity : AppCompatActivity(){
                 val progressionBar = ProgressionBar(this)
                 mindVoiceAdapter.sendEEGData(testCase.toString(), { action ->
                     binding.result.text = action
+
                     if(mode == "voice"){
                         val resourceName = action.lowercase(Locale.getDefault()).replace(" ", "_")
                         val resourceId = resources.getIdentifier(resourceName, "raw", packageName)

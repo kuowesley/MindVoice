@@ -1,5 +1,7 @@
 package com.example.bciproject.adaptor
 
+import android.Manifest
+import android.app.Activity
 import com.example.bciproject.apisetting.EEGInterface
 import com.example.bciproject.apisetting.EEGRetrofitManager
 import com.example.bciproject.model.EEGCallModel
@@ -8,6 +10,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import com.example.bciproject.apisetting.MindVoiceInterface
 import com.example.bciproject.apisetting.MindVoiceRetrofitManager
 import com.example.bciproject.util.ProgressionBar
@@ -18,7 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MindVoiceAdapter(private val context: Context){
+class MindVoiceAdapter(private val context: Context, private val activity: Activity){
     fun sendEEGData(action: String, callback: (String) -> Unit, progressionBar: ProgressionBar) {
         val eegData = loadEEGDataFromAssets(action) // 假設你有一個方法來從assets加載對應的JSON數據
         progressionBar.startLoading()
@@ -30,6 +38,9 @@ class MindVoiceAdapter(private val context: Context){
                     val eegResponse = response.body()!!
                     val result = mapLabelToString(eegResponse.label)
                     callback(result)
+                    if(result == "Help Me"){
+                        makePhoneCall()
+                    }
                     //callback(eegResponse.label)
                 } else {
                     callback("Error: Unable to analyze data")
@@ -74,6 +85,17 @@ class MindVoiceAdapter(private val context: Context){
         val jsonObject = Gson().fromJson(jsonString, JsonObject::class.java)
         val action = jsonObject.get(label).toString().trim('"')
         return action
+    }
+
+    private fun makePhoneCall() {
+        val callIntent = Intent(Intent.ACTION_CALL)
+        callIntent.data = Uri.parse("tel:000") // Use the emergency number for your country
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CALL_PHONE), 1)
+        } else {
+            context.startActivity(callIntent)
+        }
     }
 
 }
