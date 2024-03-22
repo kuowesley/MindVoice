@@ -74,17 +74,21 @@ def register(request):
             data = json.loads(request.body.decode('utf-8'))
             username = data.get('user')
             password = data.get('password')
+            email = data.get('email')
 
             # 檢查密碼複雜度
             if not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$', password):
                 return JsonResponse({'response': False, 'reason': 'Password complexity requirement not met'})
+
+            if not re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', email):
+                return JsonResponse({'response': False, 'reason': 'Invalid email address'})
 
             # 檢查用戶名是否已存在
             if User.objects.filter(username=username).exists():
                 return JsonResponse({'response': False, 'reason': 'Username already exists'})
             
             # 創建用戶
-            User.objects.create_user(username=username, password=password)
+            User.objects.create_user(username=username, password=password, email=email)
             return JsonResponse({'response': True})
         except Exception as e:
             return JsonResponse({'response': False, 'reason': 'Registration failed'})
