@@ -3,7 +3,7 @@ import uuid
 from django.http import JsonResponse
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 import os
 from django.views.decorators.csrf import csrf_exempt
@@ -94,16 +94,40 @@ def register(request):
             return JsonResponse({'response': False, 'reason': 'Registration failed'})
 
 @csrf_exempt
+def get_user_info(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'response': False, 'reason': 'Not logged in'})
+    print(request.user.id)
+    user = User.objects.get(id=request.user.id)
+    print(user)
+    return JsonResponse({'response': True, 'email': user.email})
+
+@csrf_exempt
 def login_view(request):
-    if request.method == 'POST':
-        data = json.loads(request.body.decode('utf-8'))
-        username = data.get('user')
-        password = data.get('password')
-        user = authenticate(username=username, password=password)
-        
-        if user is not None:
-            login(request, user)
-            return JsonResponse({'response': True, 'reason': 'login success'})
+    if request.method != 'POST':
+        return JsonResponse({'response': False, 'reason': 'login failed'})
+
+    data = json.loads(request.body.decode('utf-8'))
+    username = data.get('user')
+    password = data.get('password')
+
+    if request.user.is_authenticated:
+        user = User.objects.get(id=request.user.id)
+        # if user is the same: update session expiry time
+        if user.username == username:
+            request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+            return JsonResponse({'response': True, 'reason': 'Already logged in', 'session_key': request.session.session_key})
+        # if user is not the same: logout
+        else:
+            print('Logging out user', user.username)
+            logout(request)
+
+    user = authenticate(username=username, password=password)
+
+    if user is not None:
+        login(request, user)
+        request.session['user_id'] = user.id
+        return JsonResponse({'response': True, 'reason': 'login success', 'session_key': request.session.session_key})
     return JsonResponse({'response': False, 'reason': 'login failed'})
 
 @csrf_exempt
