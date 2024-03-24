@@ -10,8 +10,8 @@ import retrofit2.Response
 
 class RegisterAdapter {
 
-    fun register(username: String, password: String, callback: (Boolean, String) -> Unit) {
-        val registerCallModel = RegisterCallModel(username, password)
+    fun register(username: String, password: String, email: String, callback: (Boolean, String) -> Unit) {
+        val registerCallModel = RegisterCallModel(username, password, email)
         val client = RegisterRetrofitManager().getRegisterClient().create(RegisterInterface::class.java)
         client.register(registerCallModel).enqueue(object : Callback<RegisterCallbackModel> {
             override fun onResponse(call: Call<RegisterCallbackModel>, response: Response<RegisterCallbackModel>) {

@@ -1,5 +1,6 @@
 package com.example.bciproject.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
@@ -19,10 +20,12 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
-            registerAdapter.register(username, password) { isSuccess, message ->
+            val email = binding.emailEditText.text.toString()
+            registerAdapter.register(username, password, email) { isSuccess, message ->
                 if (isSuccess) {
                     Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
-                    // Navigate to the login screen or the main activity
+                    startActivity(Intent(this, DevicesActivity::class.java))
+
                 } else {
                     Toast.makeText(this, "Registration Failed: $message", Toast.LENGTH_SHORT).show()
                 }
