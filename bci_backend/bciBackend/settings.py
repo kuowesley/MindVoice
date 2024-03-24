@@ -135,3 +135,9 @@ CACHES = {
         }
     }
 }
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'liaojack9@gmail.com'  # 你的Gmail邮箱地址
+EMAIL_HOST_PASSWORD = 'knvbngwfdlrqedbf'  # 你的Gmail密码或应用专用密码
+EMAIL_USE_TLS = True

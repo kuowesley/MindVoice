@@ -4,7 +4,9 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
+import json
 import os
 from django.views.decorators.csrf import csrf_exempt
 
@@ -87,6 +89,26 @@ def get_user_emails(request):
 
 
 
+
+@csrf_exempt
+def send_email_notifications(request):
+    if request.method == 'GET':
+        try:
+            subject = '1111'
+            message = '1111'
+            from_email = 'liaojack9@gmail.com'
+            recipient_list = list(User.objects.filter(email__isnull=False).exclude(email__exact='').values_list('email', flat=True))
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+        # 发送邮件
+        try:
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            return JsonResponse({'status': 'success', 'message': '邮件已成功发送'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': '邮件发送失败', 'error': str(e)})
+    else:
+        return JsonResponse({'error': '该端点仅支持POST请求。'})
 
 
 
