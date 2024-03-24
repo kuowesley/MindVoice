@@ -46,6 +46,13 @@ def analyze(request):
     else:
         return JsonResponse({'error': 'This endpoint only supports POST requests.'})
 
+
+
+
+
+
+
+
 def predict(eeg_data) -> int:
     if DEV_MODE:
         return predictor.predict_local(eeg_data)
@@ -66,6 +73,22 @@ def predict(eeg_data) -> int:
         return int(output)
     finally:
         os.remove(file_name)
+
+
+
+@csrf_exempt
+def get_user_emails(request):
+    if request.method == 'GET':
+        users = User.objects.filter(email__isnull=False).exclude(email__exact='')
+        emails = [user.email for user in users]
+        return JsonResponse({'emails': emails})
+    else:
+        return JsonResponse({'error': 'This endpoint only supports GET requests.'})
+
+
+
+
+
 
 @csrf_exempt
 def register(request):
