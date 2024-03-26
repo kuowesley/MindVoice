@@ -94,9 +94,9 @@ def get_user_emails(request):
 def send_email_notifications(request):
     if request.method == 'GET':
         try:
-            subject = '1111'
-            message = '1111'
-            from_email = 'liaojack9@gmail.com'
+            subject = 'Test Email'
+            message = 'This is a test email.'
+            from_email = 'cs555team11@gmail.com'
             recipient_list = list(User.objects.filter(email__isnull=False).exclude(email__exact='').values_list('email', flat=True))
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
@@ -104,9 +104,9 @@ def send_email_notifications(request):
         # 发送邮件
         try:
             send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-            return JsonResponse({'status': 'success', 'message': '邮件已成功发送'})
+            return JsonResponse({'status': 'success', 'message': 'Mail sent successfully'})
         except Exception as e:
-            return JsonResponse({'status': 'error', 'message': '邮件发送失败', 'error': str(e)})
+            return JsonResponse({'status': 'error', 'message': 'Failed to send emails', 'error': str(e)})
     else:
         return JsonResponse({'error': '该端点仅支持POST请求。'})
 
@@ -142,9 +142,7 @@ def register(request):
 def get_user_info(request):
     if not request.user.is_authenticated:
         return JsonResponse({'response': False, 'reason': 'Not logged in'})
-    print(request.user.id)
     user = User.objects.get(id=request.user.id)
-    print(user)
     return JsonResponse({'response': True, 'email': user.email})
 
 @csrf_exempt
