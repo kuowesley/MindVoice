@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -123,3 +124,32 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+from dotenv import load_dotenv
+load_dotenv()
+DEV_MODE = os.environ.get('DEV_MODE') == 'True'
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+if DEV_MODE:
+    print("DEV_MODE=True. Will use local cache.")
+    SESSION_CACHE_ALIAS = "dev"
+else:
+    print("DEV_MODE=False. Will use redis cache.")
+    SESSION_CACHE_ALIAS = "default"
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://red-cnuqshun7f5s73fc0qag:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    "dev": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    }
+}
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'cs555team11@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('GMAIL_PASSWORD')
+EMAIL_USE_TLS = True

@@ -12,6 +12,9 @@ flask = "^3.0.2"
 requests = "^2.31.0"
 replicate = "^0.24.0"
 python-dotenv = "^1.0.1"
+django-redis = "^5.4.0"
+matplotlib = "^3.8.3"
+numpy = "^1.26.4"
 
 [[tool.poetry.source]]
 name = "pytorch"
