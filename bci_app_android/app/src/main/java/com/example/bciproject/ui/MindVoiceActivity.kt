@@ -1,11 +1,15 @@
 package com.example.bciproject.ui
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.bciproject.R
 import com.example.bciproject.adaptor.MindVoiceAdapter
@@ -32,6 +36,10 @@ class MindVoiceActivity : AppCompatActivity(){
 
         // default to text mode
         var mode = "text"
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this@MindVoiceActivity, arrayOf(Manifest.permission.CALL_PHONE), 1)
+        }
 
         binding.devicesButton.setOnClickListener{
             startActivity(Intent(this, DevicesActivity::class.java))
