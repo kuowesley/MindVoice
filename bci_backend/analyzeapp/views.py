@@ -1,3 +1,5 @@
+import base64
+from io import BytesIO
 import re
 import uuid
 from django.http import JsonResponse
@@ -9,6 +11,10 @@ from django.contrib.auth.models import User
 import json
 import os
 from django.views.decorators.csrf import csrf_exempt
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
 
 import json
 import replicate
@@ -87,28 +93,45 @@ def get_user_emails(request):
     else:
         return JsonResponse({'error': 'This endpoint only supports GET requests.'})
 
-
-
+def plot_data_and_get_image_base64(data):
+    plt.hist(data, bins=30)
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    buffer.close()
+    return base64.b64encode(image_png).decode('utf-8')
 
 @csrf_exempt
 def send_email_notifications(request):
-    if request.method == 'GET':
-        try:
-            subject = 'Test Email'
-            message = 'This is a test email.'
-            from_email = 'cs555team11@gmail.com'
-            recipient_list = list(User.objects.filter(email__isnull=False).exclude(email__exact='').values_list('email', flat=True))
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    if request.method != 'GET' and request.method != 'POST':
+        return JsonResponse({'error': 'This endpoint only supports GET and POST requests.'})
+    try:
+        subject = 'Test Email'
+        html = f"""
+        <html>
+            <body>
+                <h1>Welcome to our newsletter!</h1>
+                <p>Here's some interesting data we've collected:</p>
+                <!-- Insert histogram here -->
+                <img src="data:image/png;base64,{plot_data_and_get_image_base64(np.random.randn(1000))}" alt="Histogram" />
+            </body>
+        </html>
+        """
+        from_email = 'cs555team11@gmail.com'
+        recipient_list = list(User.objects.filter(email__isnull=False).exclude(email__exact='').values_list('email', flat=True))
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
-        # 发送邮件
-        try:
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-            return JsonResponse({'status': 'success', 'message': 'Mail sent successfully'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': 'Failed to send emails', 'error': str(e)})
-    else:
-        return JsonResponse({'error': '该端点仅支持POST请求。'})
+    # 发送邮件
+    for recipient in recipient_list:
+            try:
+                print('Sending email to', recipient)
+                send_mail(subject, "", from_email, [recipient], fail_silently=False, html_message=html)
+            except Exception as e:
+                print('Failed to send email to', recipient, 'with error:', str(e))
+    return JsonResponse({'status': 'success', 'message': 'Mail sent successfully'})
 
 
 
