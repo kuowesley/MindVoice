@@ -45,6 +45,9 @@ This Android application is designed to perform EEG (Electroencephalography) dat
 5. **Adding EEG Data**:
    - Place your `.json` files representing EEG data in the `assets` folder. Each file should match an action (e.g., `yes.json` for the "Yes" action).
 
+## Install APK to mobile device
+APK download link : https://drive.google.com/file/d/1VNfyg_4AP0B8rVKgdOG_h6-Um-AHBjHm/view?usp=sharing
+
 ## Contributing
 
 We welcome contributions to improve this project. Please feel free to fork the repository, make your changes, and submit a pull request.
