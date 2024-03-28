@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/yes"
+        android:title="yes" />
+    <item
+        android:id="@+id/helpMe"
+        android:title="help_me" />
+    <item
+        android:id="@+id/stop"
+        android:title="stop" />
+    <item
+        android:id="@+id/thankYou"
+        android:title="thank_you" />
+    <item
+        android:id="@+id/hello"
+        android:title="hello" />
+</menu>
