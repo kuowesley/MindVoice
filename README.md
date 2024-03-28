@@ -3,7 +3,7 @@ Team 11 SSW 555 Project for a Brain-Computer Interface
 
 ## Project Structure
 - [bci_app_android](bci_app_android/README.md): Android application for the Brain-Computer Interface
-- [bci_app_backend](bci_app_backend/README.md): The backend server (including the web server and the inference server)
+- [bci_backend](bci_backend/README.md): The backend server (including the web server and the inference server)
 - [bci_ml](bci_ml/README.md): Machine learning models for the Brain-Computer Interface
 
 ## Android Releases
