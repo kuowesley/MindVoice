@@ -12,9 +12,6 @@ Team 11 SSW 555 Project for a Brain-Computer Interface
 
 ## User Manual
 Upon launching the application, you will be directed to the Login Page.
-<div>
-    <img src="images/login.jpg" alt="Example Image" width="200" height="450">
-</div>
 
 ### Login Page
 
@@ -25,9 +22,8 @@ Upon launching the application, you will be directed to the Login Page.
     - Register: If you do not have an account, press the “REGISTER” button. You will be redirected to the Registration Page where you can create a new account by providing the necessary information.
 - Exploring Without Logging In:  
     - Test the Application: If you wish to explore the app's functionalities without logging in, press the “TEST” button. This action will direct you to the Devices Page, where you can test the rest of the functionalities.
-    
 <div>
-    <img src="images/register.jpg" alt="Example Image" width="200" height="450">
+    <img src="images/login.jpg" alt="Example Image" width="200" height="450">
 </div>
 
 ### Register Page
@@ -37,8 +33,7 @@ Upon launching the application, you will be directed to the Login Page.
 - For Returning Users:
     - If you decide not to create a new account and wish to return to the login page, simply press the Back to Login button. This action will redirect you to the login page where you can sign in with your existing account credentials
 <div>
-    <img src="images/devices01.jpg" alt="Example Image" width="200" height="450">
-    <img src="images/devices02.jpg" alt="Example Image" width="200" height="450">
+    <img src="images/register.jpg" alt="Example Image" width="200" height="450">
 </div>
 
 ### Devices Page
@@ -50,10 +45,8 @@ Upon launching the application, you will be directed to the Login Page.
 - Navigating Between Pages:
     - At the bottom of the Devices Page, you will find 3 buttons corresponding to different sections of the app. You can navigate between these pages by pressing the respective button for the page you wish to view.
 <div>
-<img src="images/mindvoice01.jpg" alt="Example Image" width="200" height="450">
-<img src="images/mindvoice02.jpg" alt="Example Image" width="200" height="450">
-<img src="images/mindvoice03.jpg" alt="Example Image" width="200" height="450">
-<img src="images/mindvoice04.jpg" alt="Example Image" width="200" height="450">
+    <img src="images/devices01.jpg" alt="Example Image" width="200" height="450">
+    <img src="images/devices02.jpg" alt="Example Image" width="200" height="450">
 </div>
 
 ### MindVoice Page
@@ -66,4 +59,10 @@ Upon launching the application, you will be directed to the Login Page.
     - If you grant this permission, and the prediction result is “help me”, the application will automatically initiate a phone call to a predetermined emergency contact.
 - Navigating Between Pages:
     - At the bottom of the Devices Page, you will find 3 buttons corresponding to different sections of the app. You can navigate between these pages by pressing the respective button for the page you wish to view.
+<div>
+<img src="images/mindvoice01.jpg" alt="Example Image" width="200" height="450">
+<img src="images/mindvoice02.jpg" alt="Example Image" width="200" height="450">
+<img src="images/mindvoice03.jpg" alt="Example Image" width="200" height="450">
+<img src="images/mindvoice04.jpg" alt="Example Image" width="200" height="450">
+</div>
 
