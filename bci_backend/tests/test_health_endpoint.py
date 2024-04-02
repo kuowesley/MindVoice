@@ -1,13 +1,13 @@
-import os
-from django.conf import settings
 from django.test import TestCase, Client
-import json
 
 """
 Test the /api/health/ endpoint
 """
-from bciBackend import asgi, wsgi, urls, settings
+
+
 class HealthCheckTestCase(TestCase):
+    from config import asgi, wsgi, urls, settings
+
     def setUp(self):
         self.client = Client()
 
