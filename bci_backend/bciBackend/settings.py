@@ -73,11 +73,19 @@ WSGI_APPLICATION = 'bciBackend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+# fill in respective fields in the .env file
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('postgres_database'),
+        'USER': os.environ.get('postgres_user'),
+        'PASSWORD': os.environ.get('postgres_password'),
+        'HOST': os.environ.get('postgres_host'),
+        'PORT': os.environ.get('postgres_port'),
     }
 }
 

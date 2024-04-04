@@ -143,6 +143,9 @@ def register(request):
             username = data.get('user')
             password = data.get('password')
             email = data.get('email')
+            username = username.strip()
+            password = password.strip()
+            email = email.strip()
 
             # 檢查密碼複雜度
             if not re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$', password):
