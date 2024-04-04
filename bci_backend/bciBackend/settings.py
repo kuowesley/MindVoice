@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
+DEV_MODE = os.environ.get('DEV_MODE') == 'True'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h6d4@x#53ruh7ig)8f5=5m#7i(lp*&r53*0a$)u46&)v-qx5g7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -133,9 +136,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-from dotenv import load_dotenv
-load_dotenv()
-DEV_MODE = os.environ.get('DEV_MODE') == 'True'
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 if DEV_MODE:
     print("DEV_MODE=True. Will use local cache.")
