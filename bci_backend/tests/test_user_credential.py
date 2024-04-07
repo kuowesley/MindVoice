@@ -10,6 +10,7 @@ from bciBackend import asgi, wsgi, urls, settings
 class UserCredentialTestCase(TestCase):
     def setUp(self):
         self.client = Client()
+        
 
     def test_login_success(self):
         response = self.client.post('/api/login/', json.dumps({
@@ -50,3 +51,13 @@ class UserCredentialTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertFalse(json.loads(response.content)['response'])
         self.assertEqual(json.loads(response.content)['reason'], "Registration failed")
+    
+    def test_delete_user(self):
+        response = self.client.delete('/api/delete/', json.dumps({
+            "user": "test_user6",
+            "password": "Example1"
+        }), content_type='application/json')
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(json.loads(response.content)['response'])
+        self.assertEqual(json.loads(response.content)['reason'], "Successfully deleted the user")

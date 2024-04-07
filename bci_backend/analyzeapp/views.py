@@ -156,8 +156,8 @@ def register(request):
                 return JsonResponse({'response': False, 'reason': 'Username already exists'})
             
             # 創建用戶
-            User.objects.create_user(username=username, password=password, email=email)
-            return JsonResponse({'response': True})
+            created_user = User.objects.create_user(username=username, password=password, email=email)
+            return JsonResponse({'response': True, 'user_id': created_user.id})
         except Exception as e:
             return JsonResponse({'response': False, 'reason': 'Registration failed'})
 
@@ -193,9 +193,29 @@ def login_view(request):
     if user is not None:
         login(request, user)
         request.session['user_id'] = user.id
+        print('balls')
+        print(user.id)
         return JsonResponse({'response': True, 'reason': 'login success', 'session_key': request.session.session_key})
     return JsonResponse({'response': False, 'reason': 'login failed'})
 
+@csrf_exempt
+def delete_user(request):
+    if request.method != 'DELETE':
+        return JsonResponse({'response': False, 'reason': 'This endpoint only accepts DELETE requests'})
+
+    data = json.loads(request.body.decode('utf-8'))
+    username = data.get('user')
+    password = data.get('password')
+
+    user = authenticate(username=username, password=password)
+    if user is None:
+        return JsonResponse({'response': False, 'reason': 'Invalid username or password'})
+
+    try:
+        user.delete()
+        return JsonResponse({'response': True, 'reason': 'Successfully deleted the user'})
+    except Exception as e:
+        return JsonResponse({'response': False, 'reason': 'Failed to delete the user'})
 @csrf_exempt
 def health(request):
     return JsonResponse({'status': 'ok'})
