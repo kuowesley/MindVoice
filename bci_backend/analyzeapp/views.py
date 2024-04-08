@@ -201,7 +201,7 @@ def login_view(request):
 @csrf_exempt
 def delete_user(request):
     if request.method != 'DELETE':
-        return JsonResponse({'response': False, 'reason': 'This endpoint only accepts DELETE requests'})
+        return JsonResponse({'response': False, 'reason': 'This endpoint only accepts DELETE requests'}, status=405)
 
     data = json.loads(request.body.decode('utf-8'))
     username = data.get('user')
@@ -209,13 +209,13 @@ def delete_user(request):
 
     user = authenticate(username=username, password=password)
     if user is None:
-        return JsonResponse({'response': False, 'reason': 'Invalid username or password'})
+        return JsonResponse({'response': False, 'reason': 'Invalid username or password'}, status=401)
 
     try:
         user.delete()
         return JsonResponse({'response': True, 'reason': 'Successfully deleted the user'})
     except Exception as e:
-        return JsonResponse({'response': False, 'reason': 'Failed to delete the user'})
+        return JsonResponse({'response': False, 'reason': 'Internal Error: Failed to delete the user'}, status=500)
 @csrf_exempt
 def health(request):
     return JsonResponse({'status': 'ok'})
