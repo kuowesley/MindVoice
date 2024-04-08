@@ -9,4 +9,5 @@ urlpatterns = [
     path('get-user-emails/', controllers.get_user_emails, name='get-user-emails'),
     path('health/', controllers.health, name='health'),
     path('send-email-notifications/', controllers.send_email_notifications, name='send-email-notifications'),
+    path('log-usage/', controllers.log_usage, name='log-usage'),
 ]

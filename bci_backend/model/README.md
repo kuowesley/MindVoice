@@ -9,7 +9,7 @@ To build and run the model inference, follow the instructions below:
 1. Download the model file:
    ```bash
    pip install gdown
-   gdown https://drive.google.com/uc?id=1SK0MyAoj-un3s-YN4sfKRdFS6OjrABfJ
+   gdown "https://drive.google.com/uc?id=1SK0MyAoj-un3s-YN4sfKRdFS6OjrABfJ"
    mv best_model.pth eeg_CNNautoencoder_classifier_72.07.pth
    ```
 1. Install the dependencies and enable the `poetry` virtual environment:

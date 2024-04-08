@@ -4,9 +4,9 @@ import torch
 from cog import BasePredictor, Input, Path
 
 try:
-    from model import EEGAutoencoderClassifier
-except ImportError:
     from model.eeg_autoencoder_classifier import EEGAutoencoderClassifier
+except ImportError or ModuleNotFoundError:
+    from eeg_autoencoder_classifier import EEGAutoencoderClassifier
 
 
 class Predictor(BasePredictor):

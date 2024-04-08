@@ -2,6 +2,8 @@ import os
 from django.conf import settings
 from django.test import TestCase, Client
 import json
+from config import asgi, wsgi, urls, settings
+from django.contrib.auth.models import User
 
 """
 Test the /api/analyze/ endpoint
@@ -9,8 +11,6 @@ Test the /api/analyze/ endpoint
 
 
 class AnalyzeDataTestCase(TestCase):
-    from config import asgi, wsgi, urls, settings
-
     def setUp(self):
         self.label_mapping = {
             'hello.json': 0,
@@ -46,6 +46,18 @@ class AnalyzeDataTestCase(TestCase):
             response_data = json.loads(response.content)
             self.assert_response_valid(response_data)
             self.assertEqual(response_data['label'], label)
+
+    def test_analyze_data_endpoint_with_usage(self):
+        user = User.objects.first()
+        self.assertIsNotNone(user, "No user found in the database")
+        self.client.force_login(user)
+        file_name, label = list(self.label_mapping.items())[0]
+        self.load_request_data(file_name)
+        response = self.client.post('/api/analyze/', json.dumps(self.data), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.content)
+        self.assert_response_valid(response_data)
+        self.assertEqual(response_data['label'], label)
 
     def test_analyze_data_endpoint_invalid(self):
         response = self.client.post('/api/analyze/', content_type='application/json')

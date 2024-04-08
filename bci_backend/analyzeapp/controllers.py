@@ -17,6 +17,8 @@ import json
 import replicate
 # load auth token from .env file
 from dotenv import load_dotenv
+from asgiref.sync import async_to_sync, sync_to_async
+from .models import LabelUsage
 
 matplotlib.use('Agg')
 
@@ -39,6 +41,37 @@ def error(data):
     return JsonResponse(data, status=400)
 
 
+async def save_usage(user_id, label):
+    user = await sync_to_async(User.objects.get)(id=user_id)
+    await sync_to_async(LabelUsage.objects.create)(user=user, label=label)
+
+
+@csrf_exempt
+def log_usage(request):
+    if request.method != 'POST':
+        return error({'error': 'This endpoint only supports POST requests.'})
+
+    if not request.user.is_authenticated:
+        return error({'error': 'User is not authenticated'})
+    
+    label = None
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        label = data.get('label')
+    except json.JSONDecodeError:
+        return error({'error': 'Invalid JSON'})
+    
+    if label is not None:
+        try:
+            print('Saving usage data:', request.user.id, label)
+            async_to_sync(save_usage)(request.user.id, label)
+        except Exception as e:
+            print('Failed to save usage data:', str(e))
+            return error({'error': str(e)})
+    
+    return success({'status': 'success'})
+
+
 @csrf_exempt
 def analyze(request):
     print("Running prediction...")
@@ -56,8 +89,17 @@ def analyze(request):
     if input_data is None:
         return error({'error': 'No data provided'})
 
+    label = predict(input_data)
+
+    if request.user.is_authenticated:
+        try:
+            print('Saving usage data:', request.user.id, label)
+            async_to_sync(save_usage)(request.user.id, label)
+        except Exception as e:
+            print('Failed to save usage data:', str(e))
+
     return success(data={
-        'label': predict(input_data),
+        'label': label,
         'time': user_time,
         'UserName': user_name
     })
