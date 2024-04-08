@@ -18,7 +18,7 @@ import replicate
 # load auth token from .env file
 from dotenv import load_dotenv
 from asgiref.sync import async_to_sync, sync_to_async
-from .models import LabelUsage
+from .models import LabelUsage, UserFeedback
 
 matplotlib.use('Agg')
 
@@ -251,6 +251,33 @@ def login_view(request):
         request.session['user_id'] = user.id
         return success({'response': True, 'reason': 'login success', 'session_key': request.session.session_key})
     return error({'response': False, 'reason': 'login failed'})
+
+
+@csrf_exempt
+def create_user_feedback(request):
+    if request.method != 'POST':
+        return error({'error': 'This endpoint only supports POST requests.'})
+
+    if not request.user.is_authenticated:
+        return error({'error': 'User is not authenticated'})
+
+    feedback = None
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        feedback = data.get('feedback')
+    except json.JSONDecodeError:
+        return error({'error': 'Invalid JSON'})
+
+    if feedback is not None:
+        try:
+            print('Saving feedback data:', request.user.id, feedback)
+            feedback = UserFeedback(user=request.user, feedback=feedback)
+            print("Feedback saved")
+        except Exception as e:
+            print('Failed to save feedback data:', str(e))
+            return error({'error': str(e)})
+
+    return success({'status': 'success'})
 
 
 @csrf_exempt

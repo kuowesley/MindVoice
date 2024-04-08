@@ -6,3 +6,9 @@ class LabelUsage(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     # Add other fields as needed
     label = models.CharField(max_length=200)
+
+
+class UserFeedback(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    feedback = models.TextField()
