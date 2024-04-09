@@ -1,23 +1,24 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+from torch.nn.functional import interpolate
 
 
-def Conv1d_Maker(in_channels, out_channels, kernel_size, padding=1, stride=1):
+def create_conv1d(in_channels, out_channels, kernel_size, padding=1, stride=1):
     return nn.Conv1d(in_channels, out_channels, kernel_size, padding=padding, stride=stride)
+
 
 class ConvResidualBlock(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, padding=1):
         super(ConvResidualBlock, self).__init__()
-        self.conv1 = Conv1d_Maker(in_channels, out_channels, kernel_size, padding=padding, stride=stride)
+        self.conv1 = create_conv1d(in_channels, out_channels, kernel_size, padding=padding, stride=stride)
         self.bn1 = nn.BatchNorm1d(out_channels)
         self.relu = nn.ReLU(inplace=True)
-        self.conv2 = Conv1d_Maker(out_channels, out_channels, kernel_size, padding=padding, stride=stride)
+        self.conv2 = create_conv1d(out_channels, out_channels, kernel_size, padding=padding, stride=stride)
         self.bn2 = nn.BatchNorm1d(out_channels)
         self.adjust_dimensions = in_channels != out_channels or stride != 1
         if self.adjust_dimensions:
             self.downsample = nn.Sequential(
-                Conv1d_Maker(in_channels, out_channels, 1, stride=stride),
+                create_conv1d(in_channels, out_channels, 1, stride=stride),
                 nn.BatchNorm1d(out_channels)
             )
         else:
@@ -32,11 +33,12 @@ class ConvResidualBlock(nn.Module):
         out = self.bn2(out)
 
         if out.size(2) != identity.size(2):
-            identity = F.interpolate(identity, size=out.size(2), mode='linear')
+            identity = interpolate(identity, size=out.size(2), mode='linear')
 
         out += identity
         out = self.relu(out)
         return out
+
 
 class EEGAutoencoderClassifier(nn.Module):
     def __init__(self, num_classes):
