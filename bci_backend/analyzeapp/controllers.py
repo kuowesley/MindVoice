@@ -279,6 +279,22 @@ def create_user_feedback(request):
 
     return success({'status': 'success'})
 
+@csrf_exempt
+def delete_user(request):
+    if request.method != 'DELETE':
+        response = JsonResponse({'response': False, 'reason': 'This endpoint only accepts DELETE requests'}, status=405)
+        response['Allow'] = 'DELETE'
+        return response
+
+    if request.user.is_authenticated:
+        user = request.user
+        try:
+            user.delete()
+            return JsonResponse({'response': True, 'reason': 'Successfully deleted the user'})
+        except Exception as e:
+            return JsonResponse({'response': False, 'reason': 'Internal Error: Failed to delete the user'}, status=500)
+    else:
+        return JsonResponse({'response': False, 'reason': 'User is not authenticated'}, status=401)
 
 @csrf_exempt
 def health(request):

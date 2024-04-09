@@ -11,4 +11,5 @@ urlpatterns = [
     path('send-email-notifications/', controllers.send_email_notifications, name='send-email-notifications'),
     path('log-usage/', controllers.log_usage, name='log-usage'),
     path('create-user-feedback/', controllers.create_user_feedback, name='create-user-feedback'),
+    path('delete_user/', controllers.delete_user, name='delete_user'),
 ]
