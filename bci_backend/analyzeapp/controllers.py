@@ -282,7 +282,9 @@ def create_user_feedback(request):
 @csrf_exempt
 def delete_user(request):
     if request.method != 'DELETE':
-        return JsonResponse({'response': False, 'reason': 'This endpoint only accepts DELETE requests'}, status=405)
+        response = JsonResponse({'response': False, 'reason': 'This endpoint only accepts DELETE requests'}, status=405)
+        response['Allow'] = 'DELETE'
+        return response
 
     if request.user.is_authenticated:
         user = request.user
