@@ -27,7 +27,7 @@ poetry run python bci_backend.py migrate
 In your `${repository}/bci_backend` directory, run the following commands to download the model file:
 ```bash
 pip install gdown
-gdown https://drive.google.com/uc?id=1SK0MyAoj-un3s-YN4sfKRdFS6OjrABfJ
+gdown "https://drive.google.com/uc?id=1SK0MyAoj-un3s-YN4sfKRdFS6OjrABfJ"
 mv best_model.pth ./model/eeg_CNNautoencoder_classifier_72.07.pth
 ```
 
