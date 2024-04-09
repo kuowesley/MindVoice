@@ -157,7 +157,7 @@ def register(request):
             
             # 創建用戶
             created_user = User.objects.create_user(username=username, password=password, email=email)
-            return JsonResponse({'response': True, 'user_id': created_user.id})
+            return JsonResponse({'response': True})
         except Exception as e:
             return JsonResponse({'response': False, 'reason': 'Registration failed'})
 
@@ -193,8 +193,6 @@ def login_view(request):
     if user is not None:
         login(request, user)
         request.session['user_id'] = user.id
-        print('balls')
-        print(user.id)
         return JsonResponse({'response': True, 'reason': 'login success', 'session_key': request.session.session_key})
     return JsonResponse({'response': False, 'reason': 'login failed'})
 
@@ -203,19 +201,16 @@ def delete_user(request):
     if request.method != 'DELETE':
         return JsonResponse({'response': False, 'reason': 'This endpoint only accepts DELETE requests'}, status=405)
 
-    data = json.loads(request.body.decode('utf-8'))
-    username = data.get('user')
-    password = data.get('password')
+    if request.user.is_authenticated:
+        user = request.user
+        try:
+            user.delete()
+            return JsonResponse({'response': True, 'reason': 'Successfully deleted the user'})
+        except Exception as e:
+            return JsonResponse({'response': False, 'reason': 'Internal Error: Failed to delete the user'}, status=500)
+    else:
+        return JsonResponse({'response': False, 'reason': 'User is not authenticated'}, status=401)
 
-    user = authenticate(username=username, password=password)
-    if user is None:
-        return JsonResponse({'response': False, 'reason': 'Invalid username or password'}, status=401)
-
-    try:
-        user.delete()
-        return JsonResponse({'response': True, 'reason': 'Successfully deleted the user'})
-    except Exception as e:
-        return JsonResponse({'response': False, 'reason': 'Internal Error: Failed to delete the user'}, status=500)
 @csrf_exempt
 def health(request):
     return JsonResponse({'status': 'ok'})

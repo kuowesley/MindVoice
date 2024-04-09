@@ -1,6 +1,7 @@
 import os
 from django.conf import settings
 from django.test import TestCase, Client
+from django.contrib.auth.models import User
 import json
 
 """
@@ -53,21 +54,19 @@ class UserCredentialTestCase(TestCase):
         self.assertEqual(json.loads(response.content)['reason'], "Registration failed")
     
     def test_delete_user(self):
-        response = self.client.delete('/api/delete/', json.dumps({
-            "user": "test_user6",
-            "password": "Example1"
-        }), content_type='application/json')
-        
+        user = User.objects.first()
+        self.assertIsNotNone(user, "No user found in the database")
+        self.client.force_login(user)
+
+        response = self.client.delete('/api/delete_user/')
+
         self.assertEqual(response.status_code, 200)
         self.assertTrue(json.loads(response.content)['response'])
         self.assertEqual(json.loads(response.content)['reason'], "Successfully deleted the user")
     
     def test_delete_invalid(self):
-        response = self.client.delete('/api/delete/', json.dumps({
-            "user": "fake_user_not_real",
-            "password": "Example1"
-        }), content_type='application/json')
+        response = self.client.delete('/api/delete_user/')
 
         self.assertEqual(response.status_code, 401)
         self.assertFalse(json.loads(response.content)['response'])
-        self.assertEqual(json.loads(response.content)['reason'], "Invalid username or password")
+        self.assertEqual(json.loads(response.content)['reason'], "User is not authenticated")
